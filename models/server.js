@@ -2,6 +2,8 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const path = require("path");
+const cors = require("cors");
+
 const Sockets = require("./sockets");
 class Server {
   constructor() {
@@ -9,16 +11,24 @@ class Server {
     this.port = process.env.PORT;
     this.server = http.createServer(this.app);
     this.io = socketio(this.server);
+    this.sockets = new Sockets(this.io);
   }
   middlewares() {
     this.app.use(express.static(path.resolve(__dirname, "../public")));
+    this.app.use(cors());
+    this.app.get("/ultimos", (req, res) => {
+      res.json({
+        ok: true,
+        ultimos: this.sockets.ticketList.ultimos13
+      })
+    })
   }
-  configurarSockets() {
-    new Sockets(this.io)
-  }
+  // configurarSockets() {
+  //   new Sockets(this.io)
+  // }
   execute() {
     this.middlewares();
-    this.configurarSockets  ();
+    // this.configurarSockets  ();
     this.server.listen(this.port, () => {
       console.log("SERVER RUNNING ON: ", this.port);
     })
