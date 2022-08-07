@@ -26,28 +26,33 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-  const socket = io("https://asis-learning-ws.herokuapp.com");
-  // const socket = io("http://localhost:8081");
+  // const socket = io("https://asis-learning-ws.herokuapp.com");
+  const socket = io("http://localhost:8081");
 
-  const formulario = document.querySelector("#miFormulario");
-  const mensajes = document.querySelector("#mensajes");
-  const txtMessageInput = document.querySelector("#txtMessage");
 
-  formulario.addEventListener("submit", (env)=>{
-    env.preventDefault();
-    const message = txtMessageInput.value;
-    socket.emit("message-to-server", message)
-  })
-  socket.on("message-to-server", (data)=>{
-    mensajes.innerHTML += `<li>${data}</li>`;
+  socket.on("current-band", (data)=>{
+    console.log(">>vbands", data);
   })
 
-  socket.on("mensaje-bienvenida", (data)=>{
-    console.log(">>>data", data)
-  })
-  // setTimeout(()=>{
-  //   console.log(">>>setTimeout")
-  //   socket.emit("frontend", {data: "algo del fronted", nombre: "Asis Melgarejo"})
-  // }, 2000)
+  // const formulario = document.querySelector("#miFormulario");
+  // const mensajes = document.querySelector("#mensajes");
+  // const txtMessageInput = document.querySelector("#txtMessage");
+
+  // formulario.addEventListener("submit", (env)=>{
+  //   env.preventDefault();
+  //   const message = txtMessageInput.value;
+  //   socket.emit("message-to-server", message)
+  // })
+  // socket.on("message-to-server", (data)=>{
+  //   mensajes.innerHTML += `<li>${data}</li>`;
+  // })
+
+  // socket.on("mensaje-bienvenida", (data)=>{
+  //   console.log(">>>data", data)
+  // })
+  // // setTimeout(()=>{
+  // //   console.log(">>>setTimeout")
+  // //   socket.emit("frontend", {data: "algo del fronted", nombre: "Asis Melgarejo"})
+  // // }, 2000)
 </script>
 </html>
